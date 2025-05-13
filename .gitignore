@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### secret credentials ###
-src/main/resources/env
+src/main/resources/credential.properties
