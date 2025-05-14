@@ -21,7 +21,7 @@ class ManagerEventControllerTest {
     @Test
     @DisplayName("Test response to 'local' greeting endpoint")
     public void testGreetingEndpoint() throws Exception {
-        mockMvc.perform(get("/greeting"))
+        mockMvc.perform(get("/api/greeting"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Hello, from Zoltan's Event Manager!"));
     }
