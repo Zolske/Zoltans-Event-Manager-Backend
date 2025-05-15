@@ -3,7 +3,6 @@ package com.kepes.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 @Setter
 @Getter
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 public class User {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_user")
     private String id_user;
 
