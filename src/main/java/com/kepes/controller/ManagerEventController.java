@@ -17,13 +17,27 @@ public class ManagerEventController {
     @Autowired
     private UserService userService;
 
+//    @GetMapping("/greeting")
+//    public ResponseEntity<String> greet() {
+//        System.out.println("hello from Zolsk");
+//        return ResponseEntity.ok("Hello, from Zoltan's Event Manager!");
+//    }
+
     @GetMapping("/greeting")
-    public ResponseEntity<String> greet() {
-        return ResponseEntity.ok("Hello, from Zoltan's Event Manager!");
+    public String greet() {
+        System.out.println("hello from Zolsk");
+        return"Hello, from Zoltan's Event Manager!";
     }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") String id){
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+    }
+
+    // TODO: chang path, is the same as above
+    @GetMapping("/user/{idToken}")
+    public ResponseEntity<String> userIdToken(@PathVariable("idToken") String idToken){
+        System.out.println(idToken);
+        return new ResponseEntity<>("userService.getUser(id)", HttpStatus.OK);
     }
 }
