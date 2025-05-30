@@ -34,3 +34,4 @@ build/
 
 ### secret credentials ###
 src/main/resources/credential.properties
+src/main/java/com/kepes/config/Cred.java
