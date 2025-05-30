@@ -29,15 +29,17 @@ public class ManagerEventController {
         return"Hello, from Zoltan's Event Manager!";
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") String id){
-        return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
-    }
 
-    // TODO: chang path, is the same as above
-    @GetMapping("/user/{idToken}")
-    public ResponseEntity<String> userIdToken(@PathVariable("idToken") String idToken){
-        System.out.println(idToken);
-        return new ResponseEntity<>("userService.getUser(id)", HttpStatus.OK);
-    }
+
+//    @GetMapping("/user/{id}")
+//    public ResponseEntity<User> getUserById(@PathVariable("id") String id){
+//        return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+//    }
+//
+//    // TODO: chang path, is the same as above
+//    @GetMapping("/user/{idToken}")
+//    public ResponseEntity<String> userIdToken(@PathVariable("idToken") String idToken){
+//        System.out.println(idToken);
+//        return new ResponseEntity<>("userService.getUser(id)", HttpStatus.OK);
+//    }
 }
