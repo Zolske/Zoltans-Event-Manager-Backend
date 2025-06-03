@@ -2,7 +2,6 @@ package com.kepes.service;
 
 
 import com.kepes.model.Event;
-
 import java.util.List;
 import java.util.Optional;
 

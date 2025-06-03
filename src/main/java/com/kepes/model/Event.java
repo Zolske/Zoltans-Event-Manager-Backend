@@ -6,7 +6,6 @@ import java.time.LocalTime;
 
 // lombok getter and setters annotations are not working
 @Entity
-// can not use "user" as name in postgres database
 @Table(name="events")
 public class Event {
 
