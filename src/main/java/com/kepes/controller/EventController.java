@@ -37,7 +37,7 @@ public class EventController {
 
     // Get all events to which the user has not already subscribed
     @GetMapping("/all_not_subscribed/{userId}")
-    public ResponseEntity<List<Event>> getNotSubscribedEvents(@PathVariable String userId){
+    public ResponseEntity<List<Event>> getNotSubscribedEvents(@PathVariable String userId) {
         List<Event> events = eventService.getNotSubscribedEvents(userId);
         return new ResponseEntity<>(events, GetHeader.success("Got all upcoming events not jet subscribed to."), HttpStatus.OK);
     }
@@ -51,15 +51,11 @@ public class EventController {
     }
 
     // Update an existing event
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event event) {
-//        try {
-//            Event updatedEvent = eventService.updateEvent(id, event);
-//            return ResponseEntity.ok(updatedEvent);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @PutMapping("update/{eventId}")
+    public ResponseEntity<Event> updateEvent(@PathVariable Long eventId, @RequestBody Event event) {
+        Event updatedEvent = eventService.updateEvent(eventId, event);
+        return new ResponseEntity<>(updatedEvent, GetHeader.success("Event has been update."), HttpStatus.OK);
+    }
 
     // Delete an event
     @DeleteMapping("/{id}")

@@ -54,16 +54,20 @@ public class EventServiceImpl implements EventService {
         return eventList;
     }
 
-//    @Override
-//    public Event updateEvent(Long id, Event updatedEvent) {
-//        return eventRepository.findById(id)
-//                .map(event -> {
-//                    event.setDate(updatedEvent.getDate());
-//                    event.setTime(updatedEvent.getTime());
-//                    return eventRepository.save(event);
-//                })
-//                .orElseThrow(() -> new RuntimeException("Event not found with id " + id));
-//    }
+    @Override
+    public Event updateEvent(Long id, Event updatedEvent) {
+        return eventRepository.findById(id)
+                .map(existingEvent -> {
+                    existingEvent.setTitle(updatedEvent.getTitle());
+                    existingEvent.setDescShort(updatedEvent.getDescShort());
+                    existingEvent.setDesc(updatedEvent.getDesc());
+                    existingEvent.setDate(updatedEvent.getDate());
+                    existingEvent.setTime(updatedEvent.getTime());
+                    existingEvent.setAddress(updatedEvent.getAddress());
+                    return eventRepository.save(existingEvent);
+                })
+                .orElseThrow(() -> new RuntimeException("Event not found with id " + id));
+    }
 
     @Override
     public void deleteEvent(Long id) {
