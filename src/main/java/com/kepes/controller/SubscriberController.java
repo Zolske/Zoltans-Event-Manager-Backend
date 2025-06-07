@@ -32,6 +32,13 @@ public class SubscriberController {
         return new ResponseEntity<>(subscriber, GetHeader.success("Successful subscribed to Event."), HttpStatus.OK);
     }
 
+    // delete event from the subscription table
+    @PostMapping("/unsubscribe")
+    public ResponseEntity<Void> deleteSubscription(@RequestBody CreateSubscriptionRequest request) {
+        subscriberService.deleteSubscription(request.getUserId(), request.getEventId());
+        return new ResponseEntity<>(GetHeader.success("Successful unsubscribed from Event."), HttpStatus.OK);
+    }
+
     // get all the events to which the user has subscribed
     @GetMapping("/subscribedEvents/{userId}")
     public ResponseEntity<List<Event>> getSubscribedEvents(@PathVariable String userId) {

@@ -22,6 +22,12 @@ public class User {
     @Column(name="picture_url")
     private String pictureUrl;
 
+    @Column(name="is_admin")
+    private Boolean isAdmin;
+
+    @Column(name="is_root_admin")
+    private Boolean isRootAdmin;
+
     public String getIdUser() {
         return idUser;
     }
@@ -52,5 +58,21 @@ public class User {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Boolean getRootAdmin() {
+        return isRootAdmin;
+    }
+
+    public void setRootAdmin(Boolean rootAdmin) {
+        isRootAdmin = rootAdmin;
     }
 }

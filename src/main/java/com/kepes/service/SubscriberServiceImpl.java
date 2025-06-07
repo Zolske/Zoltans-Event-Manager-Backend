@@ -38,21 +38,30 @@ public class SubscriberServiceImpl implements SubscriberService {
     @Override
     public Subscription createSubscription(String userId, Long eventId) {
 
-       Optional<Subscription> existing = subscriberRepository.findByUserIdUserAndEventIdEvent(userId, eventId);
-       if (existing.isPresent())
-           throw new ItemNotFoundException("User already subscribed to event.");
+        Optional<Subscription> existing = subscriberRepository.findByUserIdUserAndEventIdEvent(userId, eventId);
+        if (existing.isPresent())
+            throw new ItemNotFoundException("User already subscribed to event.");
 
-       User user = userRepository.findById(userId)
-           .orElseThrow(() -> new ItemNotFoundException("User not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ItemNotFoundException("User not found"));
 
-       Event event = eventRepository.findById(eventId)
-           .orElseThrow(() -> new ItemNotFoundException("Event not found"));
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ItemNotFoundException("Event not found"));
 
-       Subscription subscriber = new Subscription();
-           subscriber.setUser(user);
-           subscriber.setEvent(event);
+        Subscription subscriber = new Subscription();
+        subscriber.setUser(user);
+        subscriber.setEvent(event);
 
-       return subscriberRepository.save(subscriber);
+        return subscriberRepository.save(subscriber);
+    }
+
+    @Override
+    public void deleteSubscription(String userId, Long eventId) {
+
+        Optional<Subscription> existing = subscriberRepository.findByUserIdUserAndEventIdEvent(userId, eventId);
+        existing.ifPresent(subscriberRepository::delete);
+        if (existing.isEmpty())
+            throw new ItemNotFoundException("Subscription not found");
     }
 
 //    @Override
@@ -74,13 +83,13 @@ public class SubscriberServiceImpl implements SubscriberService {
 //        return result.orElse(null);
 //    }
 //
-    @Override
-    public void deleteSubscription(Long subscriptionId) {
-        subscriberRepository.deleteById(subscriptionId);
-    }
+//    @Override
+//    public void deleteSubscription(Long subscriptionId) {
+//        subscriberRepository.deleteById(subscriptionId);
+//    }
 
     @Override
-    public List<Event> getSubscribedEvents(String userId){
+    public List<Event> getSubscribedEvents(String userId) {
         List<Subscription> subscriptions = subscriberRepository.findByUserIdUser(userId);
         return subscriptions.stream()
                 .map(Subscription::getEvent)

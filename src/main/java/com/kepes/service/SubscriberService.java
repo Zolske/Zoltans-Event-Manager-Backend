@@ -10,7 +10,7 @@ public interface SubscriberService {
 //    Subscriber saveSubscriber(Subscriber subscriber);
 //    List<Subscriber> getAllSubscribers();
 //    Subscriber getSubscriberById(Long id);
-    void deleteSubscription(Long subscriptionId);
+    void deleteSubscription(String userId, Long eventId);
 
     List<Event> getSubscribedEvents(String userId);
 }
