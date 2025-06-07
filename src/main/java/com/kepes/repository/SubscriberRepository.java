@@ -17,5 +17,6 @@ public interface SubscriberRepository extends JpaRepository<Subscription, Long> 
      * UserId: Tells Spring to traverse the 'user' field in Subscriber, and then access its idUser field.
      */
     List<Subscription> findByUserIdUser(String userId);
+    List<Subscription> findByEventIdEvent(Long eventId);
     Optional<Subscription> findByUserIdUserAndEventIdEvent(String userId, Long eventId);
 }

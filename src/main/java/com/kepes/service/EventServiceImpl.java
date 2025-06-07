@@ -1,13 +1,16 @@
 package com.kepes.service;
 
 import com.kepes.model.Event;
+import com.kepes.model.Subscription;
 import com.kepes.repository.EventRepository;
+import com.kepes.repository.SubscriberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Flow;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -15,13 +18,15 @@ public class EventServiceImpl implements EventService {
     //@Autowired
     //EventRepository eventRepository;
     private final EventRepository eventRepository;
+    private final SubscriberRepository subscriberRepository;
 
     @Autowired
     SubscriberServiceImpl subscriberServiceImpl;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository) {
+    public EventServiceImpl(EventRepository eventRepository, SubscriberRepository subscriberRepository) {
         this.eventRepository = eventRepository;
+        this.subscriberRepository = subscriberRepository;
     }
 
     @Override
@@ -70,7 +75,17 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void deleteEvent(Long id) {
-        eventRepository.deleteById(id);
+    public void deleteEvent(Long eventId) {
+        List<Subscription> existing = subscriberRepository.findByEventIdEvent(eventId);
+        if (existing.isEmpty() == false){
+            System.out.println("There are subscriptions.");
+            String userId;
+            for(Subscription subscription : existing){
+               userId = subscription.getUser().getIdUser();
+                System.out.println("user id: " + userId);
+               subscriberServiceImpl.deleteSubscription(userId,eventId);
+            }
+        }
+        eventRepository.deleteById(eventId);
     }
 }

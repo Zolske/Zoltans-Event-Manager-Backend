@@ -51,16 +51,16 @@ public class EventController {
     }
 
     // Update an existing event
-    @PutMapping("update/{eventId}")
+    @PutMapping("/update/{eventId}")
     public ResponseEntity<Event> updateEvent(@PathVariable Long eventId, @RequestBody Event event) {
         Event updatedEvent = eventService.updateEvent(eventId, event);
         return new ResponseEntity<>(updatedEvent, GetHeader.success("Event has been update."), HttpStatus.OK);
     }
 
     // Delete an event
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
-        eventService.deleteEvent(id);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/delete/{eventId}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long eventId) {
+        eventService.deleteEvent(eventId);
+        return new ResponseEntity<>(GetHeader.success("Event has been deleted."), HttpStatus.ACCEPTED);
     }
 }
