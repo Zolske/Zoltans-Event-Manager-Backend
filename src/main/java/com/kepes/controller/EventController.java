@@ -23,10 +23,10 @@ public class EventController {
     }
 
     // Create a new event
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        Event savedEvent = eventService.createEvent(event);
-        return ResponseEntity.ok(savedEvent);
+        return new ResponseEntity<>(
+                eventService.createEvent(event),GetHeader.success("Event created."), HttpStatus.OK);
     }
 
     // Get all events

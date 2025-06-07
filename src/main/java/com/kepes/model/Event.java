@@ -12,7 +12,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_event")
-    private long idEvent;
+    private Long idEvent;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -46,11 +46,11 @@ public class Event {
         this.address = address;
     }
 
-    public long getIdEvent() {
+    public Long getIdEvent() {
         return idEvent;
     }
 
-    public void setIdEvent(long idEvent) {
+    public void setIdEvent(Long idEvent) {
         this.idEvent = idEvent;
     }
 

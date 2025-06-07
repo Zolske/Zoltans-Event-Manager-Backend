@@ -60,19 +60,19 @@ public class User {
         this.pictureUrl = pictureUrl;
     }
 
-    public Boolean getAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setIsAdmin(Boolean admin) {
         isAdmin = admin;
     }
 
-    public Boolean getRootAdmin() {
+    public Boolean getIsRootAdmin() {
         return isRootAdmin;
     }
 
-    public void setRootAdmin(Boolean rootAdmin) {
+    public void setIsRootAdmin(Boolean rootAdmin) {
         isRootAdmin = rootAdmin;
     }
 }
