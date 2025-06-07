@@ -17,6 +17,9 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
 
     @Autowired
+    SubscriberServiceImpl subscriberServiceImpl;
+
+    @Autowired
     public EventServiceImpl(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
@@ -35,6 +38,19 @@ public class EventServiceImpl implements EventService {
     public List<Event> getAllEvents() {
         List<Event> eventList = new ArrayList<>();
         eventRepository.findAll().forEach(eventList::add);
+        return eventList;
+    }
+
+    /**
+     * Get only the events to which the user has not already subscribed
+     */
+    @Override
+    public List<Event> getNotSubscribedEvents(String userId){
+        List<Event> eventList = getAllEvents();
+        List<Event> subscribedEventList = subscriberServiceImpl.getSubscribedEvents(userId);
+        for (Event subEvent : subscribedEventList) {
+            eventList.removeIf(event -> event.getIdEvent() == subEvent.getIdEvent());
+        }
         return eventList;
     }
 

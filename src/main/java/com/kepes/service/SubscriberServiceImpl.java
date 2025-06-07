@@ -1,5 +1,6 @@
 package com.kepes.service;
 
+import com.kepes.exception.ItemNotFoundException;
 import com.kepes.model.Event;
 import com.kepes.model.Subscription;
 import com.kepes.model.User;
@@ -7,10 +8,16 @@ import com.kepes.repository.EventRepository;
 import com.kepes.repository.SubscriberRepository;
 import com.kepes.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class SubscriberServiceImpl implements SubscriberService {
@@ -30,17 +37,22 @@ public class SubscriberServiceImpl implements SubscriberService {
 
     @Override
     public Subscription createSubscription(String userId, Long eventId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+       Optional<Subscription> existing = subscriberRepository.findByUserIdUserAndEventIdEvent(userId, eventId);
+       if (existing.isPresent())
+           throw new ItemNotFoundException("User already subscribed to event.");
 
-        Subscription subscriber = new Subscription();
-        subscriber.setUser(user);
-        subscriber.setEvent(event);
+       User user = userRepository.findById(userId)
+           .orElseThrow(() -> new ItemNotFoundException("User not found"));
 
-        return subscriberRepository.save(subscriber);
+       Event event = eventRepository.findById(eventId)
+           .orElseThrow(() -> new ItemNotFoundException("Event not found"));
+
+       Subscription subscriber = new Subscription();
+           subscriber.setUser(user);
+           subscriber.setEvent(event);
+
+       return subscriberRepository.save(subscriber);
     }
 
 //    @Override

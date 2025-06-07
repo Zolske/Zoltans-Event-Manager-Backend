@@ -1,7 +1,10 @@
 package com.kepes.controller;
 
+import com.kepes.helper.GetHeader;
 import com.kepes.model.Event;
+import com.kepes.model.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.kepes.service.EventService;
@@ -30,6 +33,13 @@ public class EventController {
     @GetMapping("/all")
     public ResponseEntity<List<Event>> getAllEvents() {
         return ResponseEntity.ok(eventService.getAllEvents());
+    }
+
+    // Get all events to which the user has not already subscribed
+    @GetMapping("/all_not_subscribed/{userId}")
+    public ResponseEntity<List<Event>> getNotSubscribedEvents(@PathVariable String userId){
+        List<Event> events = eventService.getNotSubscribedEvents(userId);
+        return new ResponseEntity<>(events, GetHeader.success("Got all upcoming events not jet subscribed to."), HttpStatus.OK);
     }
 
     // Get a specific event by ID

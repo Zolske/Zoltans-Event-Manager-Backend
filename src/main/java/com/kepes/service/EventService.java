@@ -12,4 +12,5 @@ public interface EventService {
     List<Event> getAllEvents();
     //Event updateEvent(Long id, Event updatedEvent);
     void deleteEvent(Long id);
+    List<Event> getNotSubscribedEvents(String userId);
 }

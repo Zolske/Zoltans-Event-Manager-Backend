@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 //public interface SubscriberRepository extends CrudRepository<Subscription, Long> {
@@ -16,4 +17,5 @@ public interface SubscriberRepository extends JpaRepository<Subscription, Long> 
      * UserId: Tells Spring to traverse the 'user' field in Subscriber, and then access its idUser field.
      */
     List<Subscription> findByUserIdUser(String userId);
+    Optional<Subscription> findByUserIdUserAndEventIdEvent(String userId, Long eventId);
 }

@@ -5,7 +5,13 @@ import jakarta.persistence.*;
 
 // lombok getter and setters annotations are not working
 @Entity
-@Table(name="subscription")
+@Table(
+        name="subscription",
+        //prevent duplicate entries
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"fk_id_user", "fk_id_event"})
+}
+)
 public class Subscription {
 
     @Id
