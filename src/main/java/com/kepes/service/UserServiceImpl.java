@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +34,13 @@ public class UserServiceImpl implements UserService {
         }
         else
             throw new ItemNotFoundException(String.format("User with id '%s' can not be found.", id));
+    }
+
+    @Override
+    public List<User> getAllUsers(){
+        List<User> userList = new ArrayList<>();
+        userRepository.findAll().forEach(userList::add);
+        return userList;
     }
 
         @Override
