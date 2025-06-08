@@ -2,13 +2,17 @@ package com.kepes.controller;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.kepes.auth.JwtUtil;
+import com.kepes.helper.GetHeader;
+import com.kepes.model.User;
 import com.kepes.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -39,13 +43,18 @@ public class AuthController {
             map.put("idUser", payload.getSubject());
             map.put("name", (String) payload.get("name"));
             map.put("pictureUrl", (String) payload.get("picture"));
-            map.put("email",  payload.getEmail());
+            map.put("email", payload.getEmail());
             return ResponseEntity.status(200).headers(responseHeaders).body(map);
         } else {
             return ResponseEntity.status(401).body("Invalid Google credentials");
         }
+    }
 
-
+        @GetMapping("/hello")
+        public ResponseEntity<String> sayHello() {
+            return new ResponseEntity<>("Hello, from the Backend of the 'Event Manager'.",
+                    GetHeader.success("How is going?"), HttpStatus.OK);
+        }
 //        if(userLogin.hasAccount())
 //            System.out.println("Is valid token");
 //
@@ -60,4 +69,3 @@ public class AuthController {
 
 
 
-}
