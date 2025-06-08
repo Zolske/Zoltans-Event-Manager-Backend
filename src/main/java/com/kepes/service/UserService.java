@@ -10,4 +10,6 @@ public interface UserService {
     GoogleIdToken verifyGoogleIdToken(String googleIdToken);
 
     List<User> getAllUsers();
+
+    String deleteUser(String userId);
 }

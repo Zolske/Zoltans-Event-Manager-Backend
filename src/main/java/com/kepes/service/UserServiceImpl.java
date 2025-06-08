@@ -12,6 +12,7 @@ import com.kepes.model.User;
 import com.kepes.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -27,41 +28,51 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public User getUser(String id){
+    public User getUser(String id) {
         Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             return user.get();
-        }
-        else
+        } else
             throw new ItemNotFoundException(String.format("User with id '%s' can not be found.", id));
     }
 
     @Override
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
         userRepository.findAll().forEach(userList::add);
         return userList;
     }
 
-        @Override
-        public GoogleIdToken verifyGoogleIdToken(String googleIdToken){
-            HttpTransport transport = new NetHttpTransport();
-            JsonFactory jsonFactory = new GsonFactory();
-            final String WEB_CLIENT_ID = new Cred().getWebClientId();
+    @Override
+    public String deleteUser(String userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isPresent()){
+            userRepository.deleteById(userId);
+            return String.format("Album with id '%s' has been deleted successfully.", userId);
+        }
+        else
+            throw new ItemNotFoundException(String.format("Album with id '%s' can not be found.", userId));
+    }
 
-            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-                    // Specify the WEB_CLIENT_ID of the app that accesses the backend:
-                    .setAudience(Collections.singletonList(WEB_CLIENT_ID))
-                    // Or, if multiple clients access the backend:
-                    //.setAudience(Arrays.asList(WEB_CLIENT_ID_1, WEB_CLIENT_ID_2, WEB_CLIENT_ID_3))
-                    .build();
+    @Override
+    public GoogleIdToken verifyGoogleIdToken(String googleIdToken) {
+        HttpTransport transport = new NetHttpTransport();
+        JsonFactory jsonFactory = new GsonFactory();
+        final String WEB_CLIENT_ID = new Cred().getWebClientId();
 
-            try {
-                return verifier.verify(googleIdToken);
-            } catch (GeneralSecurityException | IOException e)
-            {
-                System.out.println("Google Authentication failed: ".concat(e.getMessage()));
-            } return null;
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                // Specify the WEB_CLIENT_ID of the app that accesses the backend:
+                .setAudience(Collections.singletonList(WEB_CLIENT_ID))
+                // Or, if multiple clients access the backend:
+                //.setAudience(Arrays.asList(WEB_CLIENT_ID_1, WEB_CLIENT_ID_2, WEB_CLIENT_ID_3))
+                .build();
+
+        try {
+            return verifier.verify(googleIdToken);
+        } catch (GeneralSecurityException | IOException e) {
+            System.out.println("Google Authentication failed: ".concat(e.getMessage()));
+        }
+        return null;
     }
 
 

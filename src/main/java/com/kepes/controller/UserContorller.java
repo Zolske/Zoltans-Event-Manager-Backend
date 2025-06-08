@@ -6,10 +6,8 @@ import com.kepes.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +25,11 @@ public class UserContorller {
 
     @GetMapping("/get/get_all_users")
     public ResponseEntity<List<User>> getAllUsers(){
-        return new ResponseEntity<>(userService.getAllUsers(), GetHeader.success("Event created."), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUsers(), GetHeader.success("Got all users."), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/user/{user-id}")
+    public ResponseEntity<String> deleteUser(@PathVariable String userId){
+        return new ResponseEntity<>(userService.deleteUser(userId), GetHeader.success("Deleted user: " + userId), HttpStatus.OK);
     }
 }
