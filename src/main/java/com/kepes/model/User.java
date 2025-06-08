@@ -10,7 +10,7 @@ public class User {
 
     @Id
     @Column(name="id_user")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY) // use id from request
     private String idUser;
 
     @Column(name="name")
@@ -21,6 +21,12 @@ public class User {
 
     @Column(name="picture_url")
     private String pictureUrl;
+
+    @Column(name="is_admin")
+    private Boolean isAdmin;
+
+    @Column(name="is_root_admin")
+    private Boolean isRootAdmin;
 
     public String getIdUser() {
         return idUser;
@@ -52,5 +58,21 @@ public class User {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Boolean getIsRootAdmin() {
+        return isRootAdmin;
+    }
+
+    public void setIsRootAdmin(Boolean rootAdmin) {
+        isRootAdmin = rootAdmin;
     }
 }
