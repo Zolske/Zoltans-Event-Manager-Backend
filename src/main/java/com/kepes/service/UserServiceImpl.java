@@ -46,11 +46,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public String deleteUser(String userId) {
         Optional<User> user = userRepository.findById(userId);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             userRepository.deleteById(userId);
             return String.format("Album with id '%s' has been deleted successfully.", userId);
-        }
-        else
+        } else
             throw new ItemNotFoundException(String.format("Album with id '%s' can not be found.", userId));
     }
 
@@ -77,13 +76,32 @@ public class UserServiceImpl implements UserService {
 
     public String toggleAdminSetting(String userId) {
         Optional<User> userOriginal = userRepository.findById(userId);
-        if(userOriginal.isPresent()){
+        if (userOriginal.isPresent()) {
             User userUpdate = userOriginal.get();
-            if(userOriginal.get().getIsAdmin() != null){
+            if (userOriginal.get().getIsAdmin() != null) {
                 userUpdate.setIsAdmin(!userOriginal.get().getIsAdmin());
             }
             userRepository.save(userUpdate);
         }
         return "Switched Admin setting.";
+    }
+
+    public String createUserRecord(User userData) {
+        if (userData != null) {
+            Optional<User> exist = userRepository.findById(userData.getIdUser());
+            if (exist.isPresent())
+                return "User is already in database.";
+            User newUser = new User();
+            if (userData.getIdUser() != null)
+                newUser.setIdUser(userData.getIdUser());
+            if (userData.getName() != null)
+                newUser.setName(userData.getName());
+            if (userData.getEmail() != null)
+                newUser.setEmail(userData.getEmail());
+            if (userData.getPictureUrl() != null)
+                newUser.setPictureUrl(userData.getPictureUrl());
+            userRepository.save(newUser);
+        }
+        return "User has been created.";
     }
 }

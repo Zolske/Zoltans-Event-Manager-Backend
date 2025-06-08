@@ -6,7 +6,6 @@ import com.kepes.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +37,12 @@ public class UserContorller {
     public ResponseEntity<String> toggleAdminSetting(@RequestHeader("user-id") String userId) {
         return new ResponseEntity<String>(userService.toggleAdminSetting(userId),
                 GetHeader.success("Toggled admin setting for user: " + userId), HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<String> createUser(@RequestBody User newUser){
+        return new ResponseEntity<String>(userService.createUserRecord(newUser),
+                GetHeader.success("User created."), HttpStatus.OK);
     }
 }
 

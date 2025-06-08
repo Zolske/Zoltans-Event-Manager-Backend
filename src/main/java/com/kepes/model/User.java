@@ -10,7 +10,7 @@ public class User {
 
     @Id
     @Column(name="id_user")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY) // use id from request
     private String idUser;
 
     @Column(name="name")

@@ -11,4 +11,5 @@ public interface UserService {
     List<User> getAllUsers();
     String deleteUser(String userId);
     String toggleAdminSetting(String userId);
+    String createUserRecord(User newUser);
 }
