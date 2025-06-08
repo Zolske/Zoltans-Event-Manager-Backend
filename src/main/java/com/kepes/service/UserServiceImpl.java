@@ -75,5 +75,15 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
+    public String toggleAdminSetting(String userId) {
+        Optional<User> userOriginal = userRepository.findById(userId);
+        if(userOriginal.isPresent()){
+            User userUpdate = userOriginal.get();
+            if(userOriginal.get().getIsAdmin() != null){
+                userUpdate.setIsAdmin(!userOriginal.get().getIsAdmin());
+            }
+            userRepository.save(userUpdate);
+        }
+        return "Switched Admin setting.";
+    }
 }

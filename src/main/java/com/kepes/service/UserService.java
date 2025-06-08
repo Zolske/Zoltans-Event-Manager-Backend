@@ -8,8 +8,7 @@ public interface UserService {
 
     User getUser(String id);
     GoogleIdToken verifyGoogleIdToken(String googleIdToken);
-
     List<User> getAllUsers();
-
     String deleteUser(String userId);
+    String toggleAdminSetting(String userId);
 }

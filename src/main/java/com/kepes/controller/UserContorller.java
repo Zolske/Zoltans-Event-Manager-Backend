@@ -24,12 +24,20 @@ public class UserContorller {
     }
 
     @GetMapping("/get/get_all_users")
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), GetHeader.success("Got all users."), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/user/{user-id}")
-    public ResponseEntity<String> deleteUser(@PathVariable String userId){
+    public ResponseEntity<String> deleteUser(@PathVariable String userId) {
         return new ResponseEntity<>(userService.deleteUser(userId), GetHeader.success("Deleted user: " + userId), HttpStatus.OK);
     }
+
+    //    @GetMapping("/toggle_admin/{user-id}")
+    @GetMapping("/toggle_admin")
+    public ResponseEntity<String> toggleAdminSetting(@RequestHeader("user-id") String userId) {
+        return new ResponseEntity<String>(userService.toggleAdminSetting(userId),
+                GetHeader.success("Toggled admin setting for user: " + userId), HttpStatus.OK);
+    }
 }
+
