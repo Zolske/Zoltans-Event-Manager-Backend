@@ -100,6 +100,8 @@ public class UserServiceImpl implements UserService {
                 newUser.setEmail(userData.getEmail());
             if (userData.getPictureUrl() != null)
                 newUser.setPictureUrl(userData.getPictureUrl());
+                newUser.setIsAdmin(false);
+                newUser.setIsRootAdmin(false);
             userRepository.save(newUser);
         }
         return "User has been created.";
